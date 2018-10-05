@@ -2,7 +2,7 @@ library(abind)
 library(ggplot2)
 library(rstan)
 
-setwd("~/git/tyche/gp")
+setwd("~/git/fortuna/gp")
 
 rm(list = ls())
 
@@ -35,6 +35,7 @@ gp.pred = function(x.pred, y, x, alpha, rho, sigma){
   N = length(y)
   
   Sigma = cov.exp.quad(x, x, alpha, rho) + sigma^2 * diag(N)
+  # Sigma = cov.exp.quad(x, x, alpha, rho)
   
   L.Sigma = t(chol(Sigma))
   K.div.y = solve(t(L.Sigma), solve(L.Sigma, y))
@@ -45,8 +46,8 @@ gp.pred = function(x.pred, y, x, alpha, rho, sigma){
   v.pred = solve(L.Sigma, K.x.x.pred)
   cov.f.pred = cov.exp.quad(x.pred, x.pred, alpha, rho) - t(v.pred) %*% v.pred
   
-  # result = cbind(f.pred.mu, diag(cov.f.pred) + sigma^2) #Unconditional variance of y
-  result = cbind(f.pred.mu, sigma^2) #Variance of y|f
+  result = cbind(f.pred.mu, diag(cov.f.pred) + sigma^2) #Unconditional variance of y
+  # result = cbind(f.pred.mu, sigma^2) #Variance of y|f
   
   return(result)
 }

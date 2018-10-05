@@ -3,7 +3,7 @@ library(ggplot2)
 library(MASS)
 library(rstan)
 
-setwd("~/git/tyche/gp_hetsked")
+setwd("~/git/fortuna/gp_hetsked")
 
 rm(list = ls())
 
@@ -47,8 +47,12 @@ gp.pred = function(X.pred, y, x, alpha, rho, log.sigma, alpha.sigma, rho.sigma, 
   v.pred = solve(L.Sigma, K.x.x.pred)
   cov.f.pred = cov.exp.quad(X.pred, X.pred, alpha.sigma, rho.sigma) - t(v.pred) %*% v.pred
   
-  log.sigma.rng = mvrnorm(1, log.sigma.pred.mu, cov.f.pred + log.sigma.error.sd^2 * diag(N.pred))
-  sigma = exp(log.sigma.rng)
+  # log.sigma.rng = mvrnorm(1, log.sigma.pred.mu, cov.f.pred + log.sigma.error.sd^2 * diag(N.pred))
+  # sigma = exp(log.sigma.rng)
+  
+  #Noting that sigma ~ MV ln N(log.sigma.pred.mu, cov.f.pred + log.sigma.error.sd^2 * diag(N.pred)),
+  #E[sigma]_i = exp(log.sigma.pred.mu_i + cov.f.pred_ii + log.sigma.error.sd_i^2)
+  sigma = exp(log.sigma.pred.mu + diag(cov.f.pred) + log.sigma.error.sd^2)
   
   #Now fit mean of y
   Sigma = cov.exp.quad(x, x, alpha, rho) + diag(exp(log.sigma)^2)
@@ -62,8 +66,8 @@ gp.pred = function(X.pred, y, x, alpha, rho, log.sigma, alpha.sigma, rho.sigma, 
   v.pred = solve(L.Sigma, K.x.x.pred)
   cov.f.pred = cov.exp.quad(x.pred, x.pred, alpha, rho) - t(v.pred) %*% v.pred
   
-  # result = cbind(f.pred.mu, diag(cov.f.pred) + sigma^2) #Unconditional variance of y
-  result = cbind(f.pred.mu, sigma^2) #Variance of y|f
+  result = cbind(f.pred.mu, diag(cov.f.pred) + sigma^2) #Unconditional variance of y
+  # result = cbind(f.pred.mu, sigma^2) #Variance of y|f
   
   return(result)
 }

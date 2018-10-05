@@ -1,6 +1,6 @@
 library(rstan)
 
-setwd("~/git/tyche/gp")
+setwd("~/git/fortuna/gp")
 
 rm(list = ls())
 
