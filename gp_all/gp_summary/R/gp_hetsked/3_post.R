@@ -3,7 +3,7 @@ library(ggplot2)
 library(MASS)
 library(rstan)
 
-setwd("~/git/fortuna/gp_summary/R/gp_hetsked")
+setwd("~/git/fortuna/gp_all/gp_summary/R/gp_hetsked")
 
 rm(list = ls())
 
@@ -117,7 +117,7 @@ ggsave("plots/fit.pdf", width = width, height = height, scale = scale)
 fit.var.df = fit.df[,"x",drop = FALSE]
 fit.var.df$sd = apply(sqrt(f.pred[,3,]), 1, mean)
 fit.var.df$Variable = "Estimated"
-fit.var.df = rbind(fit.var.df, data.frame(x = x.pred, sd = 0.01 * x.pred, Variable = "True"))
+fit.var.df = rbind(fit.var.df, data.frame(x = x.pred, sd = sapply(x.pred, f.sd), Variable = "True"))
 
 ggplot(fit.var.df, aes(x, sd)) +
   geom_line(aes(color = Variable)) +

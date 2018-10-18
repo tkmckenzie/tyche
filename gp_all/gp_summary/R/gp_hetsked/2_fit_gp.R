@@ -1,6 +1,6 @@
 library(rstan)
 
-setwd("~/git/fortuna/gp_summary/R/gp_hetsked")
+setwd("~/git/fortuna/gp_all/gp_summary/R/gp_hetsked")
 
 rm(list = ls())
 

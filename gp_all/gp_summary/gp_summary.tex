@@ -167,7 +167,7 @@ The model presented in \cref{sec:fitting} was used to estimate a Gaussian proces
 
 \subsection{Heteroskedastic Gaussian Process Over $\RR$}
 
-Suppose that $y_i = \sin(x_i) / x_i + \ep_i$ for $x_i\in(0, 10)$ and $\ep_i\sim N(0, 0.01x_i)$. The data used in this analysis is shown in \cref{fig:gphetero:data}.
+Suppose that $y_i = \sin(x_i) / x_i + \ep_i$ for $x_i\in(0, 10)$ and $\ep_i\sim N\left(0, \left(\frac{7}{30}\right)\times\phi\left(\frac{2 (x_i - 5)}{3}\right)\right)$, where $\phi$ is the standard normal density. The data used in this analysis is shown in \cref{fig:gphetero:data}.
 
 \begin{figure}[!h]
 	\centering
@@ -206,5 +206,9 @@ This analysis uses a Gaussian process to model both the conditional mean and var
 	\caption{Estimated and True Variance}
 	\label{fig:gphetero:variance}
 \end{figure}
+
+\subsection{Gaussian Process Deterministic Frontier}
+
+
 
 \end{document}

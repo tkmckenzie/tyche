@@ -3,7 +3,7 @@ library(ggplot2)
 library(MASS)
 library(rstan)
 
-setwd("~/git/fortuna/gp_envelope/")
+setwd("~/git/fortuna/gp_all/gp_envelope")
 
 rm(list = ls())
 
