@@ -173,7 +173,7 @@ Suppose that $y_i = \sin(x_i) / x_i + \ep_i$ for $x_i\in(0, 10)$ and $\ep_i\sim 
 	\centering
 	\begin{subfigure}[b]{0.5\textwidth}
 		\includegraphics[width=\textwidth]{\detokenize{R/gp_hetsked/plots/data.pdf}}
-		\caption{$y_i = \sin(x_i) / x_i + \ep_i$; $\ep_i \sim N(0, 0.05)$}
+		\caption{$y_i = \sin(x_i) / x_i + \ep_i$; $\ep_i \sim N\left(0, \left(\frac{7}{30}\right)\times\phi\left(\frac{2 (x_i - 5)}{3}\right)\right)$}
 		\label{fig:gphetero:data}
 	\end{subfigure}%
 	\begin{subfigure}[b]{0.5\textwidth}
@@ -207,7 +207,7 @@ This analysis uses a Gaussian process to model both the conditional mean and var
 	\label{fig:gphetero:variance}
 \end{figure}
 
-\subsection{Gaussian Process Deterministic Frontier}
+%\subsection{Gaussian Process Deterministic Frontier}
 
 
 
