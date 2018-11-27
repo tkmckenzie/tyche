@@ -1,0 +1,3 @@
+https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2
+https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-all-titles.gz
+https://dumps.wikimedia.org/enwiktionary/latest/

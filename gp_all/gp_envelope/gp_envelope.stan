@@ -69,14 +69,14 @@ data{
 	real log_delta_mean;
 }
 transformed data{
+	vector[N] log_y;
 	vector[N] zeros_N;
 	matrix[N, N] I_N;
-	matrix[N, 2] X_y;
 	vector[N] log_delta_mean_N;
 	
+	log_y = log(y);
 	zeros_N = rep_vector(0, N);
 	I_N = diag_matrix(rep_vector(1, N));
-	X_y = append_col(X, y);
 	log_delta_mean_N = rep_vector(log_delta_mean, N);
 }
 parameters{
@@ -86,17 +86,14 @@ parameters{
 	real<lower=0> alpha_delta;
 	vector<lower=0>[2] P_inv_diag_delta;
 	
-	real<lower=0> sigma;
 	real<lower=0> sigma_delta;
-	
-	vector[N] log_delta;
 }
 transformed parameters{
 	matrix[N, N] K;
 	matrix[N, N] K_delta;
 	
 	K = cov_exp_quad_vector(X, alpha, rho);
-	K_delta = cov_exp_quad_matrix(X_y, alpha_delta, diag_matrix(P_inv_diag_delta));
+	K_delta = cov_exp_quad_vector(X, alpha_delta, rho_delta);
 }
 model{
 	alpha ~ normal(0, alpha_prior_sd);
