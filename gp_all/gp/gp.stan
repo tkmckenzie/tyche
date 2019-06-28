@@ -4,11 +4,9 @@ data{
 	real X[N];
 	vector[N] y;
 	
-	real<lower=0> alpha_prior_sd;
-	real<lower=0> rho_prior_shape;
-	real<lower=0> rho_prior_rate;
-	real<lower=0> sigma_prior_shape;
-	real<lower=0> sigma_prior_rate;
+	real<lower=0> alpha_prior_scale;
+	real<lower=0> rho_inv_prior_scale;
+	real<lower=0> sigma_prior_scale;
 }
 transformed data{
 	vector[N] zeros_N;
@@ -19,20 +17,20 @@ transformed data{
 }
 parameters{
 	real<lower=0> alpha;
-	real<lower=0> rho;
+	real<lower=0> rho_inv;
 	
 	real<lower=0> sigma;
 }
 transformed parameters{
 	matrix[N, N] K;
 	
-	K = cov_exp_quad(X, alpha, rho);
+	K = cov_exp_quad(X, alpha, 1 / rho_inv);
 }
 model{
-	alpha ~ normal(0, alpha_prior_sd);
-	rho ~ inv_gamma(rho_prior_shape, rho_prior_rate);
+	alpha ~ normal(0, alpha_prior_scale);
+	rho_inv ~ normal(0, rho_inv_prior_scale);
 	
-	sigma ~ inv_gamma(sigma_prior_shape, sigma_prior_rate);
+	sigma ~ cauchy(0, sigma_prior_scale);
 
 	y ~ multi_normal(zeros_N, K + square(sigma) * I_N);
 }

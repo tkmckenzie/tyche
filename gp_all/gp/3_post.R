@@ -2,7 +2,7 @@ library(abind)
 library(ggplot2)
 library(rstan)
 
-setwd("~/git/fortuna/gp")
+setwd("~/git/fortuna/gp_all/gp")
 
 rm(list = ls())
 
@@ -10,6 +10,7 @@ load("data.RData")
 load("gp_fit.RData")
 
 stan.extract = extract(stan.fit)
+# stan.extract$rho_inv = runif(sample.iter, 1, 1.1)
 
 #Prediction functions
 cov.exp.quad = function(x.1, x.2, alpha, rho){

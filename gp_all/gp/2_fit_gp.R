@@ -1,6 +1,6 @@
 library(rstan)
 
-setwd("~/git/fortuna/gp")
+setwd("~/git/fortuna/gp_all/gp")
 
 rm(list = ls())
 
@@ -19,11 +19,9 @@ load("data.RData")
 stan.data = list(N = N,
                  X = x,
                  y = y,
-                 alpha_prior_sd = 1,
-                 rho_prior_shape = 25,
-                 rho_prior_rate = 1 / 25,
-                 sigma_prior_shape = 1,
-                 sigma_prior_rate = 1)
+                 alpha_prior_scale = 0.01,
+                 rho_inv_prior_scale = 1,
+                 sigma_prior_scale = 1)
 
 if (!(stan.dso.file %in% list.files())){
   stan.dso = stan(stan.model.file, data = stan.data,
@@ -39,4 +37,4 @@ stan.fit = stan(stan.model.file, data = stan.data,
                 refresh = floor((burn.iter + sample.iter) / 100))
 save(stan.fit, burn.iter, sample.iter, file = "gp_fit.RData")
 
-show(traceplot(stan.fit))
+# show(traceplot(stan.fit))
