@@ -1,0 +1,34 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\ep}{\varepsilon}
+\newcommand{\RR}{\mathbb{R}}
+
+\begin{document}
+	
+\begin{theorem}
+	Let $X = \ep - \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N^+(0, \sigma_\delta)$. Then, $X$ has density function
+	$$f(x) = \frac{2}{\sigma}\phi\left(\frac{x}{\sigma}\right)\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right),$$
+	where $\sigma^2 = \sigma_\ep^2 + \sigma_\delta^2$, $\lambda = \sigma_\delta / \sigma_\ep$, $\phi$ is the normal density function, and $\Phi$ is the normal distribution function.
+\end{theorem}
+\begin{proof}
+	First consider the distribution function of $X$, which is given by
+	$$F(X) = \Pr(X \leq x) = \Pr(\ep - \delta \leq x)$$
+	$$= \int_{\ep - \delta \leq x} f_\ep(\ep) f_\delta(\delta) d\delta d\ep$$
+	$$= \int_{\delta\in\RR^+} f_\delta(\delta) \int_{\ep\in (-\infty, x + \delta]} f_\ep(\ep) d\ep d\delta.$$
+	Substituting in known density functions yields
+	$$\int_0^\infty 2\phi(\delta | 0, \sigma_\delta) \int_{-\infty}^{x + \delta} \phi(\ep | 0, \sigma_\ep) d\ep d\delta$$
+	$$= 2\int_0^\infty \frac{\phi\left(\frac{\delta}{\sigma_\delta}\right) \Phi\left(\frac{x + \delta}{\sigma_\ep}\right)}{\sigma_\delta} d\delta.$$
+	
+	Now, we can proceed with integration by parts. Let $u = \Phi\left(\frac{x + \delta}{\sigma_\ep}\right)$ and $dv = \left(\phi\left(\frac{\delta}{\sigma_\delta}\right) / \sigma_\delta\right) d\delta$. Then, $du = \left(\phi\left(\frac{x + \delta}{\sigma_\ep}\right) / \sigma_\ep\right) d\delta$ and $v = \Phi\left(\frac{\delta}{\sigma_\delta}\right)$. So, the integral becomes
+	$$2\left(\left[\Phi\left(\frac{x + \delta}{\sigma_\ep}\right) \Phi\left(\frac{\delta}{\sigma_\delta}\right)\right]_0^\infty - \int_0^\infty \Phi\left(\frac{\delta}{\sigma_\delta}\right) \left(\frac{\phi\left(\frac{x + \delta}{\sigma_\ep}\right)}{\sigma_\ep}\right) d\delta\right)$$
+	$$= 2\left(\left(1 - \frac{\Phi\left(\frac{x}{\sigma_\ep}\right)}{2}\right)\right)$$
+\end{proof}
+
+\end{document}
