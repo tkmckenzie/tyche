@@ -1,0 +1,84 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\ep}{\varepsilon}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\erf}{\operatorname{erf}}
+
+\begin{document}
+	
+\begin{theorem}
+	Let $X = \ep - \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N^+(0, \sigma_\delta)$. Then, $X$ has density function
+	$$f(x) = \frac{2}{\sigma}\phi\left(\frac{x}{\sigma}\right)\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right),$$
+	where $\sigma^2 = \sigma_\ep^2 + \sigma_\delta^2$, $\lambda = \sigma_\delta / \sigma_\ep$, $\phi$ is the normal density function, and $\Phi$ is the normal distribution function.
+\end{theorem}
+\begin{proof}
+	First consider the distribution function of $X$, which is given by
+	$$F(x) = \Pr(X \leq x) = \Pr(\ep - \delta \leq x)$$
+	$$= \int_{\ep - \delta \leq x} f_\ep(\ep) f_\delta(\delta) d\delta d\ep$$
+	$$= \int_{\delta\in\RR^+} f_\delta(\delta) \int_{\ep\in (-\infty, x + \delta]} f_\ep(\ep) d\ep d\delta.$$
+	Substituting in known density functions yields
+	$$\int_0^\infty 2\phi(\delta | 0, \sigma_\delta) \int_{-\infty}^{x + \delta} \phi(\ep | 0, \sigma_\ep) d\ep d\delta$$
+	$$= 2\int_0^\infty \phi(\delta | 0, \sigma_\delta) \Phi(x + \delta | 0, \sigma_\ep) d\delta.$$
+	The density of $X$ is then given by
+	$$f(x) = \frac{dF}{dx} = 2\int_0^\infty \phi(\delta | 0, \sigma_\delta) \phi(x + \delta | 0, \sigma_\ep) d\delta.$$
+	Using Sage to perform this integration, the result is given by
+	$$f(x) = -\frac{{\left(\operatorname{erf}\left(\frac{\sigma_{\delta} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\ep}}\right) e^{\left(\frac{\sigma_{\delta}^{2} x^{2}}{2 \, {\left(\sigma_{\delta}^{2} \sigma_{\ep}^{2} + \sigma_{\ep}^{4}\right)}}\right)} - e^{\left(\frac{\sigma_{\delta}^{2} x^{2}}{2 \, {\left(\sigma_{\delta}^{2} \sigma_{\ep}^{2} + \sigma_{\ep}^{4}\right)}}\right)}\right)} e^{\left(-\frac{x^{2}}{2 \, \sigma_{\ep}^{2}}\right)}}{2 \, \sqrt{\pi} \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}}}.$$
+	Defining $\lambda = \sigma_\delta / \sigma_\ep$ and $\sigma^2 = \sigma_\ep^2 + \sigma_\delta^2$, the following can be simplified:
+	$$\frac{\sigma_{\delta} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\ep}} = \frac{\lambda x}{\sigma\sqrt{2}} = \frac{x}{(\sigma / \lambda) \sqrt{2}};$$
+	$$\frac{\sigma_{\delta}^{2} x^{2}}{2 \, {\left(\sigma_{\delta}^{2} \sigma_{\ep}^{2} + \sigma_{\ep}^{4}\right)}} = \frac{\lambda^2 x^2}{2\sigma^2} = \frac{x^2}{2(\sigma / \lambda)^2}.$$
+	Thus,
+	$$f(x) = -\frac{\exp\left(\frac{x^2}{2(\sigma / \lambda)^2}\right)\left(\operatorname{erf}\left(\frac{x}{(\sigma / \lambda) \sqrt{2}}\right) - 1\right)\exp\left(-\frac{x^2}{2\sigma_\ep^2}\right)}{\sigma\sqrt{2\pi}}$$
+	$$= -\frac{\left(\operatorname{erf}\left(\frac{x}{(\sigma / \lambda) \sqrt{2}}\right) - 1\right) \exp\left(-x^2\left(\frac{1}{2\sigma_\ep^2} - \frac{1}{2(\sigma / \lambda)^2}\right)\right)}{\sigma\sqrt{2\pi}}.$$
+	Now,
+	$$\operatorname{erf}\left(\frac{x}{(\sigma / \lambda) \sqrt{2}}\right) - 1 = \left(1 + \operatorname{erf}\left(\frac{x}{(\sigma / \lambda) \sqrt{2}}\right)\right) - 2 = 2\left(\frac{1}{2}\left(1 + \operatorname{erf}\left(\frac{x}{(\sigma / \lambda) \sqrt{2}}\right)\right) - 1\right)$$
+	$$= 2\left(\Phi\left(\frac{x\lambda}{\sigma}\right) - 1\right) = -2\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right).$$
+	Also,
+	$$\frac{1}{2\sigma_\ep^2} - \frac{1}{2(\sigma / \lambda)^2} = \frac{1}{2\sigma_\ep^2} - \frac{\sigma_\delta^2}{2\sigma_\ep^2(\sigma_\delta^2 + \sigma_\ep^2)} = \frac{\sigma_\delta^2 + \sigma_\ep^2 - \sigma_\delta^2}{2\sigma_\ep^2(\sigma_\delta^2 + \sigma_\ep^2)} = \frac{\sigma_\ep^2}{2\sigma_\ep^2(\sigma_\delta^2 + \sigma_\ep^2)} = \frac{1}{2\sigma^2}.$$
+	So,
+	$$f(x) = 2\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right)\frac{\exp\left(-\frac{x^2}{2\sigma^2}\right)}{\sigma\sqrt{2\pi}} = 2\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right) \phi(x | 0, \sigma) = \frac{2}{\sigma}\phi\left(\frac{x}{\sigma}\right) \left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right).$$
+\end{proof}
+
+\begin{theorem}
+	Let $X = \ep + \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N_L^U(\mu_\delta, \sigma_\delta)$. Then, $X$ has density function ......
+\end{theorem}
+\begin{proof}
+		First consider the distribution function of $X$, which is given by
+	$$F(x) = \Pr(X \leq x) = \Pr(\ep - \delta \leq x)$$
+	$$= \int_{\ep + \delta \leq x} f_\ep(\ep) f_\delta(\delta) d\delta d\ep$$
+	$$= \int_{\delta\in[L, U]} f_\delta(\delta) \int_{\ep\in (-\infty, x - \delta]} f_\ep(\ep) d\ep d\delta.$$
+	Substituting in known density functions yields
+	$$\int_L^U \phi_L^U(\delta | \mu_\delta, \sigma_\delta) \int_{-\infty}^{x - \delta} \phi(\ep | 0, \sigma_\ep) d\ep d\delta$$
+	$$= \int_L^U \phi_L^U(\delta | \mu_\delta, \sigma_\delta) \Phi(x - \delta | 0, \sigma_\ep) d\delta.$$
+	The density of $X$ is then given by
+	$$f(x) = \frac{dF}{dx} = \int_0^\infty \phi_L^U(\delta | \mu_\delta, \sigma_\delta) \phi(x - \delta | 0, \sigma_\ep) d\delta.$$
+	Using Sage to perform this integration, the result is given by
+	$$f(x) = \frac{{\sqrt{\pi} e^{\left(\frac{\mu_{\delta}^{2} \sigma_{\ep}^{2}}{2 \, {\left(\sigma_{\delta}^{4} + \sigma_{\delta}^{2} \sigma_{\ep}^{2}\right)}} + \frac{\sigma_{\delta}^{2} x^{2}}{2 \, {\left(\sigma_{\delta}^{2} \sigma_{\ep}^{2} + \sigma_{\ep}^{4}\right)}} + \frac{\mu_{\delta} x}{\sigma_{\delta}^{2} + \sigma_{\ep}^{2}}\right)} \left( \operatorname{erf}\left(\frac{L \sigma_{\delta}^{2} + {\left(L - \mu_{\delta}\right)} \sigma_{\ep}^{2} - \sigma_{\delta}^{2} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\delta} \sigma_{\ep}}\right)  - \operatorname{erf}\left(\frac{U \sigma_{\delta}^{2} + {\left(U - \mu_{\delta}\right)} \sigma_{\ep}^{2} - \sigma_{\delta}^{2} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\delta} \sigma_{\ep}}\right) \right)} e^{\left(-\frac{\mu_{\delta}^{2}}{2 \, \sigma_{\delta}^{2}} - \frac{x^{2}}{2 \, \sigma_{\ep}^{2}}\right)}}{\sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} {\left(2.0 \, \pi \operatorname{erf}\left(\frac{\sqrt{2} {\left(L - \mu_{\delta}\right)}}{2 \, \sigma_{\delta}}\right) - 2.0 \, \pi \operatorname{erf}\left(\frac{\sqrt{2} {\left(U - \mu_{\delta}\right)}}{2 \, \sigma_{\delta}}\right)\right)}}.$$
+	Defining $\lambda = \sigma_\delta / \sigma_\ep$ and $\sigma^2 = \sigma_\ep^2 + \sigma_\delta^2$, the following can be simplified:
+	$$\frac{\mu_{\delta}^{2} \sigma_{\ep}^{2}}{2 \, {\left(\sigma_{\delta}^{4} + \sigma_{\delta}^{2} \sigma_{\ep}^{2}\right)}} + \frac{\sigma_{\delta}^{2} x^{2}}{2 \, {\left(\sigma_{\delta}^{2} \sigma_{\ep}^{2} + \sigma_{\ep}^{4}\right)}} + \frac{\mu_{\delta} x}{\sigma_{\delta}^{2} + \sigma_{\ep}^{2}} - \frac{\mu_\delta^2}{2\sigma_\delta^2} - \frac{x^2}{2\sigma_\ep^2}$$
+	$$= \frac{\mu_\delta^2 \sigma_\ep^2}{2\sigma_\delta^2(\sigma_\ep^2 + \sigma_\delta^2)} + \frac{\sigma_\delta^2 x^2}{2\sigma_\ep^2(\sigma_\ep^2 + \sigma_\delta^2)} + \frac{\mu_\delta x}{\sigma_\ep^2 + \sigma_\delta^2} - \frac{\mu_\delta^2}{2\sigma_\delta^2} - \frac{x^2}{2\sigma_\ep^2}$$
+	$$= \frac{\mu_\delta^2 \sigma_\ep^4 + x^2 \sigma_\delta^4 + 2x \mu_\delta \sigma_\ep^2 \sigma_\delta^2 - \mu_\delta^2\sigma_\ep^2(\sigma_\ep^2 + \sigma_\delta^2) - x^2\sigma_\delta^2(\sigma_\ep^2 + \sigma_\delta^2)}{2\sigma_\ep^2 \sigma_\delta^2 (\sigma_\ep^2 + \sigma_\delta^2)}$$
+	$$= \frac{-\mu_\delta^2\sigma_\delta^2\sigma_\ep^2 + 2\mu\delta\sigma_\delta^2\sigma_\ep^2 x - \sigma_\delta^2\sigma_\ep^2 x^2}{2\sigma_\ep^2 \sigma_\delta^2 (\sigma_\ep^2 + \sigma_\delta^2)}$$
+	$$= -\frac{(x - \mu_\delta)^2 \sigma_\delta^2 \sigma_\ep^2}{2\sigma_\ep^2 \sigma_\delta^2 (\sigma_\ep^2 + \sigma_\delta^2)} = -\frac{(x - \mu_\delta)^2}{2\sigma^2};$$
+	
+	$$\frac{B \sigma_{\delta}^{2} + {\left(B - \mu_{\delta}\right)} \sigma_{\ep}^{2} - \sigma_{\delta}^{2} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\delta} \sigma_{\ep}} = \frac{B\lambda + (B - \mu_\delta) (1 / \lambda) - \lambda x}{\sigma \sqrt{2}} = \frac{\lambda (B - x) + (B - \mu_\delta) (1 / \lambda)}{\sigma \sqrt{2}};$$
+	Let
+	$$\eta(x, B) := \lambda (B - x) + (B - \mu_\delta) (1 / \lambda)$$
+	$$f(x) = \frac{\exp\left(-\frac{(x - \mu_\delta)^2}{2\sigma^2}\right) \left(\erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right) - \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right)\right)}{\sigma\sqrt{2\pi}\left(\erf\left(\frac{\mu_\delta - U}{\sigma_\delta\sqrt{2}}\right) - \erf\left(\frac{\mu_\delta - L}{\sigma_\delta\sqrt{2}}\right)\right)}.$$
+	Next,
+	$$\erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right) - \erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right) = 2\left(\frac12 \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right) - \frac12\erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right)\right)$$
+	$$= 2\left(\frac12 \left(1 + \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right)\right) - \frac12 \left(1 + \erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right)\right)\right)$$
+	$$= 2\left(\Phi\left(\frac{\eta(x, L)}{\sigma}\right) - \Phi\left(\frac{\eta(x, U)}{\sigma}\right)\right).$$
+	Similarly,
+	$$\left(\erf\left(\frac{L - \mu_\delta}{\sigma_\delta\sqrt{2}}\right) - \erf\left(\frac{U - \mu_\delta}{\sigma_\delta\sqrt{2}}\right)\right) = 2\left(\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)\right).$$
+	Thus, altogether
+	$$f(x) = \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, L)}{\sigma}\right) - \Phi\left(\frac{\eta(x, U)}{\sigma}\right)}{\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)}.$$
+\end{proof}
+
+\end{document}
