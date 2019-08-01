@@ -46,7 +46,9 @@
 \end{proof}
 
 \begin{theorem}
-	Let $X = \ep + \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N_L^U(\mu_\delta, \sigma_\delta)$. Then, $X$ has density function ......
+	Let $X = \ep + \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N_L^U(\mu_\delta, \sigma_\delta)$. Then, $X$ has density function 
+	$$f(x) = \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, U)}{\sigma}\right) - \Phi\left(\frac{\eta(x, L)}{\sigma}\right)}{\Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right)},$$
+	where $\eta(x, B) = \lambda (B - x) + (B - \mu_\delta) (1 / \lambda)$, $\lambda = \sigma_\delta / \sigma_\ep$, $\sigma^2 = \sigma_\ep^2 + \sigma_\delta^2$, and $\phi$ and $\Phi$ are the standard normal density and distribution functions, respectively.
 \end{theorem}
 \begin{proof}
 		First consider the distribution function of $X$, which is given by
@@ -69,8 +71,9 @@
 	
 	$$\frac{B \sigma_{\delta}^{2} + {\left(B - \mu_{\delta}\right)} \sigma_{\ep}^{2} - \sigma_{\delta}^{2} x}{2 \, \sqrt{\frac{1}{2} \, \sigma_{\delta}^{2} + \frac{1}{2} \, \sigma_{\ep}^{2}} \sigma_{\delta} \sigma_{\ep}} = \frac{B\lambda + (B - \mu_\delta) (1 / \lambda) - \lambda x}{\sigma \sqrt{2}} = \frac{\lambda (B - x) + (B - \mu_\delta) (1 / \lambda)}{\sigma \sqrt{2}};$$
 	Let
-	$$\eta(x, B) := \lambda (B - x) + (B - \mu_\delta) (1 / \lambda)$$
-	$$f(x) = \frac{\exp\left(-\frac{(x - \mu_\delta)^2}{2\sigma^2}\right) \left(\erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right) - \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right)\right)}{\sigma\sqrt{2\pi}\left(\erf\left(\frac{\mu_\delta - U}{\sigma_\delta\sqrt{2}}\right) - \erf\left(\frac{\mu_\delta - L}{\sigma_\delta\sqrt{2}}\right)\right)}.$$
+	$$\eta(x, B) := \lambda (B - x) + (B - \mu_\delta) (1 / \lambda).$$
+	So,
+	$$f(x) = \frac{\exp\left(-\frac{(x - \mu_\delta)^2}{2\sigma^2}\right) \left(\erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right) - \erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right)\right)}{\sigma\sqrt{2\pi}\left(\erf\left(\frac{L - \mu_\delta}{\sigma_\delta\sqrt{2}}\right) - \erf\left(\frac{U - \mu_\delta}{\sigma_\delta\sqrt{2}}\right)\right)}.$$
 	Next,
 	$$\erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right) - \erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right) = 2\left(\frac12 \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right) - \frac12\erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right)\right)$$
 	$$= 2\left(\frac12 \left(1 + \erf\left(\frac{\eta(x, L)}{\sigma \sqrt{2}}\right)\right) - \frac12 \left(1 + \erf\left(\frac{\eta(x, U)}{\sigma \sqrt{2}}\right)\right)\right)$$
@@ -78,7 +81,8 @@
 	Similarly,
 	$$\left(\erf\left(\frac{L - \mu_\delta}{\sigma_\delta\sqrt{2}}\right) - \erf\left(\frac{U - \mu_\delta}{\sigma_\delta\sqrt{2}}\right)\right) = 2\left(\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)\right).$$
 	Thus, altogether
-	$$f(x) = \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, L)}{\sigma}\right) - \Phi\left(\frac{\eta(x, U)}{\sigma}\right)}{\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)}.$$
+	$$f(x) = \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, L)}{\sigma}\right) - \Phi\left(\frac{\eta(x, U)}{\sigma}\right)}{\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)}$$
+	$$= \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, U)}{\sigma}\right) - \Phi\left(\frac{\eta(x, L)}{\sigma}\right)}{\Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right)}.$$
 \end{proof}
 
 \end{document}
