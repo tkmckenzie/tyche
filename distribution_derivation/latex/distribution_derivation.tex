@@ -12,7 +12,9 @@
 \newcommand{\erf}{\operatorname{erf}}
 
 \begin{document}
-	
+
+\section{Density function forms}
+
 \begin{theorem}
 	Let $X = \ep - \delta$, where $\ep\sim N(0, \sigma_\ep)$ and $\delta\sim N^+(0, \sigma_\delta)$. Then, $X$ has density function
 	$$f(x) = \frac{2}{\sigma}\phi\left(\frac{x}{\sigma}\right)\left(1 - \Phi\left(\frac{x\lambda}{\sigma}\right)\right),$$
@@ -83,6 +85,20 @@
 	Thus, altogether
 	$$f(x) = \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, L)}{\sigma}\right) - \Phi\left(\frac{\eta(x, U)}{\sigma}\right)}{\Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right)}$$
 	$$= \frac{1}{\sigma}\phi\left(\frac{x - \mu_\delta}{\sigma}\right) \frac{\Phi\left(\frac{\eta(x, U)}{\sigma}\right) - \Phi\left(\frac{\eta(x, L)}{\sigma}\right)}{\Phi\left(\frac{U - \mu_\delta}{\sigma_\delta}\right) - \Phi\left(\frac{L - \mu_\delta}{\sigma_\delta}\right)}.$$
+\end{proof}
+
+\section{Characteristics of distributions}
+
+\begin{theorem}
+	Let $\ep > 0$, $0 < \rho \leq 1$, and $\nu > 0$. Then, there exists $\sigma > 0$ so that
+	$$\int_{-\ep}^\ep f_t(x | 0, \sigma, \nu) dx > 1 - \rho,$$
+	where $f_t(x | 0, \sigma, \nu)$ is the density of a $t$-distributed random variable with location 0, scale $\sigma$, and $\nu$ degrees of freedom.
+\end{theorem}
+\begin{proof}
+	First, note that
+	$$\int_{-\ep}^\ep f_t(x | 0, \sigma, \nu) dx$$
+	$$= -2(\nu + 1)\sqrt{\nu}\sigma \arctan\left(\frac{\ep}{\sqrt{\nu}\sigma}\right)$$
+	$$+ 2\ep\left(\nu - \frac{\ln\pi}{2} + 1 - \frac{\ln\nu}{2} - \ln\sigma - \left(\frac{\nu + 1}{2}\right)\ln\left(\frac{\nu\sigma^2 + \ep^2}{\nu\sigma^2}\right) + \ln\left(\Gamma\left(\frac{\nu + 1}{2}\right)\right) - \ln\left(\Gamma\left(\frac{\nu}{2}\right)\right)\right)$$
 \end{proof}
 
 \end{document}
