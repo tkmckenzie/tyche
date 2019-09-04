@@ -11,7 +11,7 @@ import decode
 import error_rate
 
 ##################################################
-# Deriving theoretical bit error rate
+# Deriving theoretical bit error rate and comparing to observed bit error rate
 with open('params.pkl', 'rb') as f:
 	params = pkl.load(f)
 
@@ -65,4 +65,9 @@ be_fp = integrate_result[0]
 
 be_rate = 0.5 * be_fn + 0.5 * be_fp
 
-print(be_rate, error_rate.error_rate)
+print('Theoretical BER = %.5f\nEmpirical BER = %.5f' % (be_rate, error_rate.error_rate))
+
+##################################################
+# Detection
+import detection
+print('KS test p-value = %.5f' % detection.kstest_result.pvalue)

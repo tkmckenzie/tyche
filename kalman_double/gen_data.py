@@ -25,7 +25,7 @@ for i in range(N):
 	z[i,:] = H * x + v.rvs().reshape((num_obs, 1))
 	x = F * x + w.rvs().reshape((num_states, 1))
 
-plt.plot(z.flatten())
+#plt.plot(z.flatten())
 
 with open('obs_data.pkl', 'wb') as f:
 	pkl.dump(z, f)
