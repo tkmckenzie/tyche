@@ -1,0 +1,174 @@
+\documentclass{article}
+
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{breqn}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\dhat}[1]{\hat{\hat{#1}}}
+
+\begin{document}
+
+\subsubsection{Encoding}
+
+Suppose the encoder observes data $z_t$ from the RTU at time $t$. Assume the encoder has developed and estimated a state-space model of the form
+\begin{subequations}
+\begin{align}
+	\label{eq:encoder-state}
+	x_t &= F x_{t-1} + w_t \\
+	\label{eq:encoder-obs}
+	z_t &= H x_t + v_t,
+\end{align}
+\end{subequations}
+where $w_t\sim N(0, Q)$, $v_t\sim N(0, R)$, and $F$, $Q$, $H$, and $R$ are parameters of the model. States of the Kalman filter are estimated via the following equations:
+\begin{subequations}
+\begin{align}
+	\hat{x}_{t|t-1} &= F \hat{x}_{t-1|t-1} \\
+	P_{t|t-1} &= F P_{t-1|t-1} F' + Q \\
+	e_t &= z_t - H \hat{x}_{t|t-1} \\
+	S_t &= H P_{t|t-1} H' + R \\
+	K_t &= P_{t|t-1} H' S_t^{-1} \\
+	\hat{x}_{t|t} &= \hat{x}_{t|t-1} + K_t e_t \\
+	P_{t|t} &= (I - K_t H) P_{t|t-1} \\
+	e_{t|t} &= z_t - H \hat{x}_{t|t}. 
+\end{align}
+\end{subequations}
+Suppose that the system has been observed long enough that asymptotic results can be used. Specifically, \cite{KumarVaraiya} show that
+\begin{subequations}
+\begin{align}
+	\lim_{t\to\infty} P_{t|t} &= \Sigma := (I - KH)S \\
+	\lim_{t\to\infty} K_t &= K := S H' (H S H' + R)^{-1} \\
+	\lim_{t\to\infty} P_{t|t-1} &= S := F \Sigma F' + Q. 
+\end{align}
+\end{subequations}
+
+Then, state and observation estimates are formed with
+\begin{subequations}
+\begin{align}
+	\label{eq:encoder-state-est}
+	\hat{x}_t &= F \hat{x}_{t-1} + K(z_t - H F \hat{x}_{t-1}) \\
+	\hat{z}_t &= H \hat{x}_t,
+\end{align}
+\end{subequations}
+where variables with hats represent estimated values. Both of these estimators are unbiased with distributions
+\begin{subequations}
+\begin{align}
+	\label{eq:encoder-state-est-dist}
+	\hat{x}_t &\sim N(x_t, \Sigma) \\
+	\label{eq:encoder-obs-est-dist}
+	\hat{z}_t = H\hat{x}_t &\sim N(H x_t, H \Sigma H').
+\end{align}
+\end{subequations}
+
+The message is encoded in noise $u_t$ (assumed to be iid), so that the encoder sends $y_t$, defined as
+\begin{equation}
+	\label{eq:encoder-obs-est}
+	y_t = \hat{z}_t + u_t,
+\end{equation}
+where $u_t\sim N(0, T)$. Note that anomaly detectors are expecting to see $z_t$ be sent, which has distribution $z_t\sim N(H x_t, R)$. Also note that $y_t$ has the distribution
+\begin{equation}
+	y_t \sim N(H \hat{x}_t, T) \equiv N(H x_t, H \Sigma H' + T).
+\end{equation}
+By choosing $T = R - H \Sigma H'$, the encoder ensures that $y_t$ has the same distribution as $z_t$, which implies the steganography is undetectable. However, the encoder could choose a different $T$ to reduce error rates in the decoding step, at the cost of being more detectable.
+
+\subsubsection{Decoding}
+
+The decoder receives $y_t$ and attempts to extract noise and infer the message accordingly. The state-space model the decoder uses is already known from the setup of the encoder. Specifically, using \cref{eq:encoder-state-est}, states evolve according to the relationship
+\begin{subequations}
+\begin{align}
+	\hat{x}_t &= F \hat{x}_{t-1} + K(z_t - H F \hat{x}_{t-1}) \\
+	&= (F - KHF)\hat{x}_{t-1} + K z_t \\
+	&= (F - KHF)\hat{x}_{t-1} + K (H x_t + v_t) \\
+	&= (F - KHF)\hat{x}_{t-1} + K (H F x_{t-1} + H w_t + v_t).
+\end{align}
+\end{subequations}
+Thus, the evolution of states can be described by
+\begin{equation}
+	\left[\begin{array}{c}\hat{x}_t \\ x_t \end{array}\right] = \left[\begin{array}{c} (F - K H F)\hat{x}_{t-1} + K H F x_{t-1} + K H w_t + K v_t \\ F x_{t-1} + w_t\end{array}\right].
+\end{equation}
+Define $\chi_t = (\hat{x}_t, x_t)'$, $\hat{B} = (I, 0)$, and $B = (0, I)$, where $I$ is the identity matrix and $0$ is the square matrix of zeros, each with number of rows and columns equal to the number of states. Notice that $\hat{x}_t = \hat{B}\chi_t$, $x_t = B\chi_t$, and $\hat{B} \hat{B}' = B B' = I$. Then, the state evolution can be written as
+\begin{subequations}
+\begin{align}
+	\chi_t &= \hat{B}'((F - K H F)\hat{B}\chi_{t-1} +  K H F B \chi_{t-1} + K H w_t + K v_t) + B'(F B \chi_{t-1} + w_t) \\
+	&= (\hat{B}'(F \hat{B} - K H F \hat{B} + K H F B) + B' F B)\chi_{t-1} + \hat{B}'(K H w_t + K v_t) + B' w_t \\
+	&= A \chi_{t-1} + c_t,
+\end{align}
+\end{subequations}
+where $A = \hat{B}'(F \hat{B} - K H F \hat{B} + K H F B) + B' F B$ and $c_t = \hat{B}'(K H w_t + K v_t) + B' w_t$. Notice that since $w_t$ and $v_t$ are iid normal, $c_t$, which is a linear combination of $w_t$ and $v_t$, is also iid normal. Specifically, the distribution of $c_t$ is given by $c_t\sim N(0, C)$, where
+\begin{equation}
+	C = \hat{B}' K (H Q H' + R) K' \hat{B} + B' Q B.
+\end{equation}
+
+Further, since $y_t = \hat{z}_t + u_t = H\hat{x}_t + u_t = H \hat{B} \chi_t + u_t$, the state-space model can be written as
+\begin{subequations}
+\begin{align}
+	\chi_t &= A \chi_{t-1} + c_t \\
+	y_t &= H \hat{B} \chi_t + u_t,
+\end{align}
+\end{subequations}
+where $u_t\sim N(0, T)$.
+
+Now, similar to the encoding Kalman, filter, the optimal state and observation estimates are given by
+\begin{subequations}
+\begin{align}
+	\hat{\chi}_t &= A \hat{\chi}_{t-1} + \tilde{K} (y_t - H \hat{B} A \hat{\chi}_{t-1}) \\
+	y_t &= H\hat{B} \hat{\chi}_t.
+\end{align}
+\end{subequations}
+The distributions of these estimates are
+\begin{subequations}
+\begin{align}
+	\hat{\chi}_t &\sim N(\chi_t, \tilde{\Sigma}) \\
+	\hat{y}_t = H \hat{B} \hat{\chi}_t &\sim N(H \hat{B} \chi_t, H \hat{B} \tilde{\Sigma} \hat{B}' H') \equiv N(H \hat{x}_t, H \hat{B} \tilde{\Sigma} \hat{B}' H').
+\end{align}
+\end{subequations}
+In the equations above, $\tilde{K}$ and $\tilde{\Sigma}$ are defined by the system of equations
+\begin{subequations}
+	\begin{align}
+	\tilde{\Sigma} &= (I - \tilde{K} H \hat{B}) \tilde{S} \\
+	\tilde{K} &= \tilde{S} \hat{B}' H' (H \hat{B} \tilde{S} \hat{B}' H' + T)^{-1} \\
+	\tilde{S} &= A \tilde{\Sigma} A' + C.
+	\end{align}
+\end{subequations}
+
+The decoder estimates the residual $\hat{u}_t$ with
+\begin{subequations}
+	\begin{align}
+	\hat{u}_t &= y_t - \hat{y}_t \\
+	&= (H \hat{x}_t + u_t) - H \hat{B} \hat{\chi}_t \\
+	&= H(\hat{x}_t - \hat{B} \hat{\chi}_t) + u_t.
+	\end{align}
+\end{subequations}
+Notice that since $\hat{x}_t \sim N(x_t, \Sigma)$ and $\hat{\chi}_t \sim N(\chi_t, \tilde{\Sigma})$,
+\begin{subequations}
+\begin{align}
+	\hat{x}_t - \hat{B} \hat{\chi}_t &\sim N(x_t - \hat{B} \chi_t, \Sigma + \hat{B} \tilde{\Sigma} \hat{B}') \\
+	&\equiv N(x_t - \hat{x}_t, \Sigma + \hat{B} \tilde{\Sigma} \hat{B}') \\
+	&\equiv N(x_t - x_t, 2\Sigma + \hat{B} \tilde{\Sigma} \hat{B}') \\
+	&\equiv N(0, 2\Sigma + \hat{B} \tilde{\Sigma} \hat{B}').
+\end{align}
+\end{subequations}
+Thus, the estimated residual conditional on the value for the actual residual encoding the message is
+\begin{equation}
+	\hat{u}_t | u_t \sim N(u_t, H (2\Sigma + \hat{B} \tilde{\Sigma} \hat{B}') H').
+\end{equation}
+
+A central question in determining decoding error rates is whether the decoder will interpret a residual in the same way the encoder intended. Specifically, assume the encoder is sending a message associated with a region $R$, and the error $u_t\in R$ encodes the message. The error rate for that region is given by the probability that the inferred residual $\hat{u}_t$ will not be in $R$ given that the true error $u_t$ is in $R$, which can be expressed as
+\begin{equation}
+	\Pr(\hat{u}_t \not\in R | u_t \in R) = \int_{u_t\in R} \phi(u_t | 0, T) \int_{\hat{u}_t \not\in R} \phi(\hat{u}_t | u_t, H (2\Sigma + \hat{B} \tilde{\Sigma} \hat{B}') H') d\hat{u}_t du_t,
+\end{equation}
+where $\phi(x | m, V)$ is the value of the normal density at $x$ given mean $m$ and variance $V$.
+
+\bibliographystyle{chicago}
+\bibliography{distribution_derivation}
+
+\end{document}
