@@ -1,0 +1,246 @@
+-- Configuring Dakota with CMake 3.15.3
+-- Dakota release version is: 6.10
+-- Appear to building from source package.
+-- The C compiler identification is GNU 7.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- The CXX compiler identification is GNU 7.3.0
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The Fortran compiler identification is GNU 5.4.0
+-- Check for working Fortran compiler: /usr/bin/gfortran
+-- Check for working Fortran compiler: /usr/bin/gfortran  -- works
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Checking whether /usr/bin/gfortran supports Fortran 90
+-- Checking whether /usr/bin/gfortran supports Fortran 90 -- yes
+-- Found Perl: /usr/bin/perl (found version "5.26.1") 
+-- Found PythonInterp: /usr/bin/python (found version "2.7.12") 
+-- Detecting Fortran/C Interface
+-- Detecting Fortran/C Interface - Found GLOBAL and MODULE mangling
+-- Found Boost: /usr/include (found suitable version "1.58.0", minimum required is "1.49") found components:  filesystem program_options regex serialization system 
+-- Dakota setting Teuchos_DIR to /home/tmcken/Dakota/dakota-6.10.0.src/build/packages/external/trilinos/packages/teuchos
+
+Configuring Trilinos build directory
+
+-- PROJECT_SOURCE_DIR='/home/tmcken/Dakota/dakota-6.10.0.src/packages/external/trilinos'
+-- PROJECT_BINARY_DIR='/home/tmcken/Dakota/dakota-6.10.0.src/build/packages/external/trilinos'
+-- Trilinos_TRIBITS_DIR='/home/tmcken/Dakota/dakota-6.10.0.src/packages/external/trilinos/cmake/tribits'
+-- TriBITS_VERSION_STRING='0.9 (Dev)'
+-- CMAKE_VERSION='3.15.3'
+-- CMAKE_GENERATOR='Unix Makefiles'
+-- CMAKE_HOST_SYSTEM_NAME='Linux'
+-- Trilinos_HOSTNAME='vhead2'
+-- Found PythonInterp: /usr/bin/python (found suitable version "2.7.12", minimum required is "2.6") 
+-- PYTHON_EXECUTABLE='/usr/bin/python'
+
+Setting up major user options ...
+
+CMake Warning (dev) at packages/external/trilinos/cmake/tribits/core/utils/AdvancedSet.cmake:57 (SET):
+  implicitly converting 'FILENAME' to 'STRING' type.
+Call Stack (most recent call first):
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsGlobalMacros.cmake:696 (ADVANCED_SET)
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsProjectImpl.cmake:124 (TRIBITS_DEFINE_GLOBAL_OPTIONS_AND_DEFINE_EXTRA_REPOS)
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsProject.cmake:93 (TRIBITS_PROJECT_IMPL)
+  packages/external/trilinos/CMakeLists.txt:90 (TRIBITS_PROJECT)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Setting Trilinos_ENABLE_TriKota=OFF because '/home/tmcken/Dakota/dakota-6.10.0.src/packages/external/trilinos/packages/TriKota/Dakota' does not exist!
+
+Reading list of native packages from /home/tmcken/Dakota/dakota-6.10.0.src/packages/external/trilinos/PackagesList.cmake
+
+-- Trilinos_NUM_PACKAGES='2'
+
+Reading list of native TPLs from /home/tmcken/Dakota/dakota-6.10.0.src/packages/external/trilinos/TPLsList.cmake
+
+-- Trilinos_NUM_TPLS='108'
+
+Processing Project, Repository, and Package dependency files and building internal dependencies graph ...
+
+NOTE: Setting Trilinos_ENABLE_TeuchosKokkosCompat=OFF because package TeuchosKokkosCompat has a required dependency on missing package KokkosCore!
+NOTE: Setting Trilinos_ENABLE_TeuchosKokkosComm=OFF because package TeuchosKokkosComm has a required dependency on missing package KokkosCore!
+-- Trilinos_NUM_SE_PACKAGES='10'
+
+Explicitly enabled packages on input (by user):  Teuchos ROL 2
+
+Explicitly enabled SE packages on input (by user):  Teuchos ROL 2
+
+Explicitly disabled packages on input (by user or by default):  0
+
+Explicitly disabled SE packages on input (by user or by default):  TeuchosKokkosCompat TeuchosKokkosComm 2
+
+Explicitly enabled TPLs on input (by user):  0
+
+Explicitly disabled TPLs on input (by user or by default):  MPI 1
+
+Disabling all packages that have a required dependency on disabled TPLs and optional package TPL support based on TPL_ENABLE_<TPL>=OFF ...
+
+
+Disabling subpackages for hard disables of parent packages due to Trilinos_ENABLE_<PARENT_PACKAGE>=OFF ...
+
+
+Disabling forward required SE packages and optional intra-package support that have a dependancy on disabled SE packages Trilinos_ENABLE_<TRIBITS_PACKAGE>=OFF ...
+
+-- Setting Teuchos_ENABLE_TeuchosKokkosCompat=OFF because Teuchos has an optional library dependence on disabled package TeuchosKokkosCompat
+-- Setting Teuchos_ENABLE_TeuchosKokkosComm=OFF because Teuchos has an optional library dependence on disabled package TeuchosKokkosComm
+
+Enabling subpackages for hard enables of parent packages due to Trilinos_ENABLE_<PARENT_PACKAGE>=ON ...
+
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosCore=ON because parent package Trilinos_ENABLE_Teuchos=ON
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosParser=ON because parent package Trilinos_ENABLE_Teuchos=ON
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosParameterList=ON because parent package Trilinos_ENABLE_Teuchos=ON
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosComm=ON because parent package Trilinos_ENABLE_Teuchos=ON
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosNumerics=ON because parent package Trilinos_ENABLE_Teuchos=ON
+-- Setting subpackage enable Trilinos_ENABLE_TeuchosRemainder=ON because parent package Trilinos_ENABLE_Teuchos=ON
+
+Enabling all required (and optional since Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=ON) upstream SE packages for current set of enabled packages (Trilinos_ENABLE_SECONDARY_TESTED_CODE=ON) ...
+
+
+Enabling all optional intra-package enables <TRIBITS_PACKAGE>_ENABLE_<DEPPACKAGE> that are not currently disabled if both sets of packages are enabled ...
+
+
+Enabling all remaining required TPLs for current set of enabled packages ...
+
+-- Setting TPL_ENABLE_BLAS=ON because it is required by the enabled package TeuchosNumerics
+-- Setting TPL_ENABLE_LAPACK=ON because it is required by the enabled package TeuchosNumerics
+
+Enabling all optional package TPL support <TRIBITS_PACKAGE>_ENABLE_<DEPTPL> not currently disabled for enabled TPLs ...
+
+
+Enabling TPLs based on <TRIBITS_PACKAGE>_ENABLE_<TPL>=ON if TPL is not explicitly disabled ...
+
+
+Set cache entries for optional packages/TPLs and tests/examples for packages actually enabled ...
+
+
+Enabling the shell of non-enabled parent packages (mostly for show) that have at least one subpackage enabled ...
+
+
+Final set of enabled packages:  Teuchos ROL 2
+
+Final set of enabled SE packages:  TeuchosCore TeuchosParser TeuchosParameterList TeuchosComm TeuchosNumerics TeuchosRemainder Teuchos ROL 8
+
+Final set of non-enabled packages:  0
+
+Final set of non-enabled SE packages:  TeuchosKokkosCompat TeuchosKokkosComm 2
+
+Final set of enabled TPLs:  BLAS LAPACK 2
+
+Final set of non-enabled TPLs:  MKL yaml-cpp Peano CUDA CUSPARSE Thrust Cusp TBB Pthread HWLOC QTHREAD BinUtils ARPREC QD MPI Boost Scotch OVIS gpcd METIS MTMETIS ParMETIS PuLP TopoManager LibTopoMap PaToH CppUnit ADOLC ADIC TVMET MF ExodusII Nemesis XDMF Zlib HDF5 CGNS Pnetcdf Netcdf y12m SuperLUDist SuperLUMT SuperLU Cholmod UMFPACK MA28 AMD CSparse HYPRE PETSC BLACS SCALAPACK MUMPS PARDISO_MKL PARDISO Oski TAUCS ForUQTK Dakota HIPS MATLAB CASK SPARSKIT QT gtest BoostLib BoostAlbLib OpenNURBS Portals CrayPortals Gemini InfiniBand BGPDCMF BGQPAMI Pablo HPCToolkit Clp GLPK qpOASES Matio PAPI MATLABLib Eigen X11 Lemon GLM quadmath CAMAL RTlib DLlib AmgX CGAL CGALCore VTune TASMANIAN ArrayFireCPU SimMesh SimModel SimParasolid SimAcis SimField Valgrind QUO ViennaCL Avatar pebbl 106
+
+Setting up export dependencies for all enabled SE packages ...
+
+
+Probing the environment ...
+
+-- USE_XSDK_DEFAULTS='FALSE'
+-- BUILD_SHARED_LIBS='ON'
+-- Setting CMAKE_BUILD_TYPE=RELEASE since it was not set ...
+-- CMAKE_BUILD_TYPE=''
+-- CMAKE_C_COMPILER_ID='GNU'
+-- CMAKE_C_COMPILER_VERSION='7.3.0'
+-- CMAKE_CXX_COMPILER_ID='GNU'
+-- CMAKE_CXX_COMPILER_VERSION='7.3.0'
+-- Trilinos_SET_INSTALL_RPATH='TRUE'
+-- CMAKE_INSTALL_RPATH_USE_LINK_PATH='TRUE'
+-- CMAKE_INSTALL_RPATH='$ORIGIN;$ORIGIN/../lib;$ORIGIN/../bin'
+-- Looking for C++ include sys/time.h
+-- Looking for C++ include sys/time.h - found
+-- Looking for C++ include time.h
+-- Looking for C++ include time.h - found
+-- Looking for C++ include stdint.h
+-- Looking for C++ include stdint.h - found
+-- Looking for C++ include inttypes.h
+-- Looking for C++ include inttypes.h - found
+-- Fortran name mangling: LOWER UNDER
+-- Verifying Fortran/CXX Compiler Compatibility
+-- Verifying Fortran/CXX Compiler Compatibility - Failed
+CMake Error at /usr/local/share/cmake-3.15/Modules/FortranCInterface.cmake:383 (message):
+  The Fortran compiler:
+
+    /usr/bin/gfortran
+
+  and the CXX compiler:
+
+    /usr/bin/c++
+
+  failed to compile a simple test project using both languages.  The output
+  was:
+
+    Change Dir: /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX
+    
+    Run Build Command(s):/usr/bin/make VerifyFortranC && /usr/local/bin/cmake -S/usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify -B/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX --check-build-system CMakeFiles/Makefile.cmake 0
+    /usr/bin/make -f CMakeFiles/Makefile2 VerifyFortranC
+    make[1]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    /usr/local/bin/cmake -S/usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify -B/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX --check-build-system CMakeFiles/Makefile.cmake 0
+    /usr/local/bin/cmake -E cmake_progress_start /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX/CMakeFiles 6
+    /usr/bin/make -f CMakeFiles/Makefile2 CMakeFiles/VerifyFortranC.dir/all
+    make[2]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    /usr/bin/make -f CMakeFiles/VerifyFortran.dir/build.make CMakeFiles/VerifyFortran.dir/depend
+    make[3]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    cd /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX/CMakeFiles/VerifyFortran.dir/DependInfo.cmake
+    Scanning dependencies of target VerifyFortran
+    make[3]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    /usr/bin/make -f CMakeFiles/VerifyFortran.dir/build.make CMakeFiles/VerifyFortran.dir/build
+    make[3]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    [ 16%] Building Fortran object CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+    /usr/bin/gfortran -DVERIFY_CXX -I/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX  -O3   -c /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify/VerifyFortran.f -o CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+    [ 33%] Linking Fortran static library libVerifyFortran.a
+    /usr/local/bin/cmake -P CMakeFiles/VerifyFortran.dir/cmake_clean_target.cmake
+    /usr/local/bin/cmake -E cmake_link_script CMakeFiles/VerifyFortran.dir/link.txt --verbose=1
+    /usr/bin/ar qc libVerifyFortran.a  CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+    /usr/bin/ranlib libVerifyFortran.a
+    make[3]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    [ 33%] Built target VerifyFortran
+    /usr/bin/make -f CMakeFiles/VerifyFortranC.dir/build.make CMakeFiles/VerifyFortranC.dir/depend
+    make[3]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    cd /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX /home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX/CMakeFiles/VerifyFortranC.dir/DependInfo.cmake
+    Scanning dependencies of target VerifyFortranC
+    make[3]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    /usr/bin/make -f CMakeFiles/VerifyFortranC.dir/build.make CMakeFiles/VerifyFortranC.dir/build
+    make[3]: Entering directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    [ 50%] Building C object CMakeFiles/VerifyFortranC.dir/main.c.o
+    /usr/bin/cc -DVERIFY_CXX -I/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX  -O3 -DNDEBUG   -o CMakeFiles/VerifyFortranC.dir/main.c.o   -c /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify/main.c
+    [ 66%] Building C object CMakeFiles/VerifyFortranC.dir/VerifyC.c.o
+    /usr/bin/cc -DVERIFY_CXX -I/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX  -O3 -DNDEBUG   -o CMakeFiles/VerifyFortranC.dir/VerifyC.c.o   -c /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify/VerifyC.c
+    [ 83%] Building CXX object CMakeFiles/VerifyFortranC.dir/VerifyCXX.cxx.o
+    /usr/bin/c++  -DVERIFY_CXX -I/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX  -O3 -DNDEBUG   -o CMakeFiles/VerifyFortranC.dir/VerifyCXX.cxx.o -c /usr/local/share/cmake-3.15/Modules/FortranCInterface/Verify/VerifyCXX.cxx
+    [100%] Linking CXX executable VerifyFortranC
+    /usr/local/bin/cmake -E cmake_link_script CMakeFiles/VerifyFortranC.dir/link.txt --verbose=1
+    /usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/VerifyFortranC.dir/main.c.o CMakeFiles/VerifyFortranC.dir/VerifyC.c.o CMakeFiles/VerifyFortranC.dir/VerifyCXX.cxx.o  -o VerifyFortranC  -L/usr/lib/gcc/x86_64-linux-gnu/5 libVerifyFortran.a -lgfortran -lquadmath 
+    /usr/bin/ld: libVerifyFortran.a(VerifyFortran.f.o): relocation R_X86_64_32S against `.rodata.str1.8' can not be used when making a PIE object; recompile with -fPIC
+    /usr/bin/ld: final link failed: Nonrepresentable section on output
+    collect2: error: ld returned 1 exit status
+    CMakeFiles/VerifyFortranC.dir/build.make:117: recipe for target 'VerifyFortranC' failed
+    make[3]: *** [VerifyFortranC] Error 1
+    make[3]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    CMakeFiles/Makefile2:107: recipe for target 'CMakeFiles/VerifyFortranC.dir/all' failed
+    make[2]: *** [CMakeFiles/VerifyFortranC.dir/all] Error 2
+    make[2]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    CMakeFiles/Makefile2:114: recipe for target 'CMakeFiles/VerifyFortranC.dir/rule' failed
+    make[1]: *** [CMakeFiles/VerifyFortranC.dir/rule] Error 2
+    make[1]: Leaving directory '/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/FortranCInterface/VerifyCXX'
+    Makefile:134: recipe for target 'VerifyFortranC' failed
+    make: *** [VerifyFortranC] Error 2
+    
+    
+Call Stack (most recent call first):
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsFortranMangling.cmake:50 (FortranCInterface_VERIFY)
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsGlobalMacros.cmake:1927 (INCLUDE)
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsProjectImpl.cmake:188 (TRIBITS_SETUP_ENV)
+  packages/external/trilinos/cmake/tribits/core/package_arch/TribitsProject.cmake:93 (TRIBITS_PROJECT_IMPL)
+  packages/external/trilinos/CMakeLists.txt:90 (TRIBITS_PROJECT)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/CMakeOutput.log".
+See also "/home/tmcken/Dakota/dakota-6.10.0.src/build/CMakeFiles/CMakeError.log".
+
