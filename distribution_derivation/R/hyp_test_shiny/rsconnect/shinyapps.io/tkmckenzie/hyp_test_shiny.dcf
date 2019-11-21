@@ -1,0 +1,10 @@
+name: hyp_test_shiny
+title:
+username:
+account: tkmckenzie
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1473549
+bundleId: 2590350
+url: https://tkmckenzie.shinyapps.io/hyp_test_shiny/
+when: 1573768673.77962

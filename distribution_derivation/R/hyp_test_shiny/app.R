@@ -1,13 +1,14 @@
 library(ggplot2)
 library(ggrepel)
 library(shiny)
+library(sn)
 
-setwd("~/git/fortuna/distribution_derivation/R")
+# setwd("~/git/fortuna/distribution_derivation/R")
 source("normal_mixture.R")
 
-rm(list = ls())
+# rm(list = ls())
 
-distributions = c("Normal", "t", "Log-normal", "Mixture of normals")
+distributions = c("Normal", "Student's t", "Log-normal", "Skew normal", "Mixture of normals")
 
 ui = fluidPage(
   plotOutput("error.plot", height = 800),
@@ -29,6 +30,8 @@ ui = fluidPage(
 )
 
 server = function(input, output, session){
+  values = reactiveValues(data = NULL)
+  
   sample.test = function(i, sampling.function, sampling.args, sampling.dist.mean){
     sampling.args$n = input$sample.size
     x = do.call(sampling.function, sampling.args)
@@ -40,11 +43,11 @@ server = function(input, output, session){
     return(c((1 - pnorm(abs((mu - sampling.dist.mean) / se))) * 2, t.test(x, mu = sampling.dist.mean)$p.value))
   }
   
-  generate.mixture.params = function(num.components){
+  generate.mixture.params = function(num.components, mu.mean, mu.sd, sigma.shape, sigma.rate){
     u = runif(num.components)
     p.mix = u / sum(u)
-    mu = rnorm(num.components, 0, 1)
-    sigma = 1 / rgamma(num.components, 1, 1)
+    mu = rnorm(num.components, mu.mean, mu.sd)
+    sigma = 1 / rgamma(num.components, sigma.shape, sigma.rate)
     
     return(list(p.mix = p.mix, mu = mu, sigma = sigma))
   }
@@ -52,18 +55,23 @@ server = function(input, output, session){
   sampling.function = reactive({
     switch(input$distribution,
            "Normal" = rnorm,
-           "t" = rt,
+           "Student's t" = rt,
            "Log-normal" = rlnorm,
+           "Skew normal" = rsn,
            "Mixture of normals" = rmixnorm)
   })
   sampling.args = reactive({
-    req(!is.null(input$num.components))
+    if (input$distribution == "Mixture of normals"){
+      req(!is.null(input$num.components))
+      input$draw.mixture
+    }
     
     switch(input$distribution,
            "Normal" = list(mean = 0, sd = input$sd),
-           "t" = list(df = input$df),
+           "Student's t" = list(df = input$df),
            "Log-normal" = list(meanlog = input$meanlog, sdlog = input$sdlog),
-           "Mixture of normals" = generate.mixture.params(input$num.components)
+           "Skew normal" = list(xi = 0, omega = input$omega, alpha = input$alpha),
+           "Mixture of normals" = generate.mixture.params(input$num.components, input$mu.mean, input$mu.sd, input$sigma.shape, input$sigma.rate)
     )
   })
   sampling.dist.mean = reactive({
@@ -71,23 +79,26 @@ server = function(input, output, session){
     
     switch(input$distribution,
            "Normal" = 0,
-           "t" = 0,
+           "Student's t" = 0,
            "Log-normal" = exp(sampling.args()$meanlog + sampling.args()$sdlog^2 / 2),
+           "Skew normal" = sampling.args()$xi + sampling.args()$omega * (sampling.args()$alpha / sqrt(1 + sampling.args()$alpha^2)) * sqrt(2 / pi),
            "Mixture of normals" = c(sampling.args()$p.mix %*% sampling.args()$mu)
     )
   })
   density.function = reactive({
     switch(input$distribution,
            "Normal" = dnorm,
-           "t" = dt,
+           "Student's t" = dt,
            "Log-normal" = dlnorm,
+           "Skew normal" = dsn,
            "Mixture of normals" = dmixnorm)
   })
   quantile.function = reactive({
     switch(input$distribution,
            "Normal" = qnorm,
-           "t" = qt,
+           "Student's t" = qt,
            "Log-normal" = qlnorm,
+           "Skew normal" = qsn,
            "Mixture of normals" = qmixnorm)
   })
   
@@ -96,16 +107,25 @@ server = function(input, output, session){
            "Normal" = tagList(
              numericInput("sd", "sd", 1, min = 0, step = 0.1)
            ),
-           "t" = tagList(
+           "Student's t" = tagList(
              numericInput("df", "df", 10, min = 0, step = 0.1)
            ),
            "Log-normal" = tagList(
              numericInput("meanlog", "meanlog", 0, step = 0.25),
              numericInput("sdlog", "sdlog", 1, min = 0, step = 0.1)
            ),
+           "Skew normal" = tagList(
+             numericInput("omega", "Scale", 1, min = 0, step = 1),
+             numericInput("alpha", "Shape", 0, step = 1)
+           ),
            "Mixture of normals" = tagList(
              numericInput("num.components", "Number of components", 3, min = 1, step = 1),
-             actionButton("draw.mixture", "Draw new mixture")
+             numericInput("mu.mean", "\\(\\mu\\) mean", 0, step = 1),
+             numericInput("mu.sd", "\\(\\mu\\) std. dev.", 1, min = 0, step = 1),
+             numericInput("sigma.shape", "\\(\\sigma\\) shape", 1, min = 0, step = 1),
+             numericInput("sigma.rate", "\\(\\sigma\\) rate", 1, min = 0, step = 1),
+             actionButton("draw.mixture", "Draw new mixture"),
+             withMathJax()
            )
     )
   })
