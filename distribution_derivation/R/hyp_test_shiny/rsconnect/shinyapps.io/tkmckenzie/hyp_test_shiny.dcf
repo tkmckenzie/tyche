@@ -5,6 +5,6 @@ account: tkmckenzie
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1473549
-bundleId: 2590350
+bundleId: 2622516
 url: https://tkmckenzie.shinyapps.io/hyp_test_shiny/
-when: 1573768673.77962
+when: 1574878739.23269

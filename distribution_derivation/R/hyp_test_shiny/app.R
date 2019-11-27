@@ -16,7 +16,8 @@ ui = fluidPage(
   fluidRow(
     column(4,
            numericInput("sample.size", "Sample size", 30, min = 0, step = 1),
-           numericInput("num.sims", "Number of simulations", 5000, min = 100, step = 100)
+           numericInput("num.sims", "Number of simulations", 5000, min = 100, step = 100),
+           actionButton("run.simulation", "Run simulation")
     ),
     column(4,
            selectInput("distribution", "Select distribution", distributions)
@@ -115,8 +116,8 @@ server = function(input, output, session){
              numericInput("sdlog", "sdlog", 1, min = 0, step = 0.1)
            ),
            "Skew normal" = tagList(
-             numericInput("omega", "Scale", 1, min = 0, step = 1),
-             numericInput("alpha", "Shape", 0, step = 1)
+             numericInput("omega", "scale", 1, min = 0, step = 1),
+             numericInput("alpha", "shape", 0, step = 1)
            ),
            "Mixture of normals" = tagList(
              numericInput("num.components", "Number of components", 3, min = 1, step = 1),
@@ -132,6 +133,7 @@ server = function(input, output, session){
   
   output$error.plot = renderPlot({
     req(!any(sapply(sampling.args(), is.null)))
+    input$run.simulation
     
     x = sapply(1:input$num.sims, sample.test, sampling.function = sampling.function(), sampling.args = sampling.args(), sampling.dist.mean = sampling.dist.mean())
     
@@ -154,7 +156,7 @@ server = function(input, output, session){
       geom_point(data = point.df, aes(color = Test)) +
       geom_label_repel(data = point.df, aes(label = Label, color = Test), point.padding = 1) +
       xlab("Significance Level") +
-      ylab("Probability of incorrectly rejecting H0") +
+      ylab("Estimated probability of incorrectly rejecting H0") +
       theme_bw() +
       theme(legend.position = "top")
   })
