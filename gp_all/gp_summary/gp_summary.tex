@@ -97,6 +97,8 @@ This form still presents difficulties in sampling because its posterior distribu
 
 This model only requires sampling of $\theta$ and $\sigma$, greatly reducing the dimensionality of the model. Further, the mean and variance of $y|f(X)$ can still be derived, described in more detail in the following section.
 
+% Note to self: Half-Cauchy priors on alpha, P, and sigma tend to work pretty well and are not overly informative. Imposing a half-Cauchy prior on P results in more smoothing than the same prior on P^-1. More general formulations of P may exist by forming priors over a vector X and setting P = X'X.
+
 \section{Standard Gaussian Process Inference}
 
 \label{sec:inference}

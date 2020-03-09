@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.8.18)  20 NOV 2018 14:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.8.18)  20 JAN 2020 13:11
 entering extended mode
 **./gp_summary.tex
 (gp_summary.tex
@@ -269,28 +269,28 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: R/gp_homosked/plots/data.pdf Graphic file (type pdf)
 
 <use R/gp_homosked/plots/data.pdf>
-Package pdftex.def Info: R/gp_homosked/plots/data.pdf used on input line 154.
+Package pdftex.def Info: R/gp_homosked/plots/data.pdf used on input line 156.
 (pdftex.def)             Requested size: 234.8775pt x 156.58607pt.
 
 <R/gp_homosked/plots/fit.pdf, id=15, 433.62pt x 289.08pt>
 File: R/gp_homosked/plots/fit.pdf Graphic file (type pdf)
 
 <use R/gp_homosked/plots/fit.pdf>
-Package pdftex.def Info: R/gp_homosked/plots/fit.pdf used on input line 159.
+Package pdftex.def Info: R/gp_homosked/plots/fit.pdf used on input line 161.
 (pdftex.def)             Requested size: 234.8775pt x 156.58607pt.
  [2]
 <R/gp_hetsked/plots/data.pdf, id=20, 433.62pt x 289.08pt>
 File: R/gp_hetsked/plots/data.pdf Graphic file (type pdf)
 
 <use R/gp_hetsked/plots/data.pdf>
-Package pdftex.def Info: R/gp_hetsked/plots/data.pdf used on input line 175.
+Package pdftex.def Info: R/gp_hetsked/plots/data.pdf used on input line 177.
 (pdftex.def)             Requested size: 234.8775pt x 156.58607pt.
 
 <R/gp_hetsked/plots/fit.pdf, id=21, 433.62pt x 289.08pt>
 File: R/gp_hetsked/plots/fit.pdf Graphic file (type pdf)
 
 <use R/gp_hetsked/plots/fit.pdf>
-Package pdftex.def Info: R/gp_hetsked/plots/fit.pdf used on input line 180.
+Package pdftex.def Info: R/gp_hetsked/plots/fit.pdf used on input line 182.
 (pdftex.def)             Requested size: 234.8775pt x 156.58607pt.
  [3 <./R/gp_homosked/plots/data.pdf> <./R/gp_homosked/plots/fit.pdf> <./R/gp_he
 tsked/plots/data.pdf> <./R/gp_hetsked/plots/fit.pdf>] <R/gp_hetsked/plots/varia
@@ -298,7 +298,7 @@ nce.pdf, id=63, 433.62pt x 289.08pt>
 File: R/gp_hetsked/plots/variance.pdf Graphic file (type pdf)
 
 <use R/gp_hetsked/plots/variance.pdf>
-Package pdftex.def Info: R/gp_hetsked/plots/variance.pdf used on input line 205
+Package pdftex.def Info: R/gp_hetsked/plots/variance.pdf used on input line 207
 .
 (pdftex.def)             Requested size: 234.8775pt x 156.58607pt.
  [4 <./R/gp_hetsked/plots/variance.pdf>]
