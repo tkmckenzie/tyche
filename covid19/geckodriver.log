@@ -1,0 +1,36 @@
+1583850447520	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\tmcken\\AppData\\Local\\Temp\\rust_mozprofileBHn7f7"
+1583850448676	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1583850448676	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1583850448676	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1583850448685	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1583850448830	addons.xpi-utils	WARN	Add-on lsiwebhook@lakesidesoftware.com is not correctly signed.
+1583850448831	addons.xpi-utils	WARN	Add-on lsiwebhook@lakesidesoftware.com is not correctly signed.
+1583850448832	addons.xpi-utils	WARN	addMetadata: Add-on lsiwebhook@lakesidesoftware.com is invalid: Error: Extension lsiwebhook@lakesidesoftware.com is not correctly signed(resource://gre/modules/addons/XPIDatabase.jsm:2725:15) JS Stack trace: addMetadata@XPIDatabase.jsm:2725:15
+processFileChanges@XPIDatabase.jsm:3152:26
+checkForChanges@XPIProvider.jsm:2946:55
+startup@XPIProvider.jsm:2406:12
+callProvider@AddonManager.jsm:213:31
+_startProvider@AddonManager.jsm:649:5
+startup@AddonManager.jsm:873:14
+startup@AddonManager.jsm:3469:26
+observe@addonManager.js:70:29
+1583850448833	addons.xpi-utils	WARN	Could not uninstall invalid item from locked install location
+1583850449327	addons.xpi-utils	WARN	Add-on lsiwebhook@lakesidesoftware.com is not correctly signed.
+1583850449327	addons.xpi-utils	WARN	Add-on lsiwebhook@lakesidesoftware.com is not correctly signed.
+1583850449328	addons.xpi	WARN	Invalid XPI: signature is required but missing
+console.error: Policies.jsm: 
+  Download failed - ERROR_SIGNEDSTATE_REQUIRED - file:///C:/Program%20Files%20(x86)/SysTrack/LsiAgent/Utilities/lsiwebhook@lakesidesoftware.com.xpi
+JavaScript error: undefined, line 14: Error: An unexpected error occurred
+JavaScript error: moz-extension://8a71dfa4-b631-41a2-89b8-0c9e9d760975/lib/picture_in_picture_overrides.js, line 15: Error: Incorrect argument types for pictureInPictureParent.setOverrides.
+JavaScript error: resource:///modules/sessionstore/SessionStore.jsm, line 1325: uncaught exception: 2147746065
+1583850450715	Marionette	INFO	Listening on port 50136
+1583850450813	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://archive.org/includes/jquery-1.10.2.min.js?v1.10.2, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1583850465086	Marionette	INFO	Stopped listening on port 50136
+[Child 19144, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1581023849/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 19144, Chrome_Chi[
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 11804, Chrome_ChildThrea
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
