@@ -2,7 +2,7 @@ library(ggplot2)
 library(rstan)
 library(truncnorm)
 
-setwd("~/git/fortuna/sf/polynomial_sf")
+setwd("~/git/tyche/sf/polynomial_sf")
 
 rm(list = ls())
 

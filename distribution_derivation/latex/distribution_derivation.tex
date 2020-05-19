@@ -54,7 +54,7 @@
 \end{theorem}
 \begin{proof}
 		First consider the distribution function of $X$, which is given by
-	$$F(x) = \Pr(X \leq x) = \Pr(\ep - \delta \leq x)$$
+	$$F(x) = \Pr(X \leq x) = \Pr(\ep + \delta \leq x)$$
 	$$= \int_{\ep + \delta \leq x} f_\ep(\ep) f_\delta(\delta) d\delta d\ep$$
 	$$= \int_{\delta\in[L, U]} f_\delta(\delta) \int_{\ep\in (-\infty, x - \delta]} f_\ep(\ep) d\ep d\delta.$$
 	Substituting in known density functions yields
