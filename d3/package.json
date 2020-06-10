@@ -1,0 +1,14 @@
+{
+  "name": "@d3/sankey-diagram",
+  "main": "99b2e903e7df3b0a@273.js",
+  "version": "273.0.0",
+  "homepage": "https://observablehq.com/@d3/sankey-diagram",
+  "author": {
+    "name": "D3",
+    "url": "https://observablehq.com/@d3"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
