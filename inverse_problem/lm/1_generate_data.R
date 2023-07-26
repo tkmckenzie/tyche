@@ -4,6 +4,8 @@ library(mvtnorm)
 setwd("~/git/tyche/inverse_problem/lm")
 rm(list = ls())
 
+set.seed(0)
+
 N = 100
 k = 3
 
