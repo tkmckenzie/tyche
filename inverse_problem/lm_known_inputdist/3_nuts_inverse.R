@@ -20,7 +20,7 @@ stan.fit = stan("known_params.stan", data = stan.data,
                 chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
                 refresh = floor((burn.iter + sample.iter) / 100))
 traceplot(stan.fit)
-stan.extract = extract(stan.fit)
+stan.extract = rstan::extract(stan.fit)
 
 df.y = data.frame(y = y)
 df.X.obs = data.frame(X = X) %>% pivot_longer(starts_with("X")) %>% mutate(series = "obs")
