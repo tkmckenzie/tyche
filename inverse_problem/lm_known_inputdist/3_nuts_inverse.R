@@ -3,7 +3,7 @@ library(ggplot2)
 library(rstan)
 library(tidyr)
 
-setwd("~/git/tyche/inverse_problem/lm")
+setwd("~/git/tyche/inverse_problem/lm_known_inputdist")
 rm(list = ls())
 
 burn.iter = 1000
@@ -11,20 +11,25 @@ sample.iter = 1000
 
 load("data.RData")
 load("params.RData")
+load("stanfit_lm.RData")
 
 obs.number = 75
-stan.data = list(k = k, beta = beta, sigma = sigma,
+stan.data = list(sample_iter = nrow(stan.extract$beta), k = ncol(stan.extract$beta), 
+                 beta = stan.extract$beta, sigma = stan.extract$sigma,
                  mu_X = mu.X, Sigma_X = Sigma.X,
                  y_i = c(X[obs.number,] %*% beta))
-stan.fit = stan("known_params.stan", data = stan.data,
+stan.fit = stan("known_inputdist.stan", data = stan.data,
                 chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
                 refresh = floor((burn.iter + sample.iter) / 100))
 traceplot(stan.fit)
 stan.extract = rstan::extract(stan.fit)
 
+X_i = Reduce(cbind, lapply(1:k, function(i) c(stan.extract$X_i[,i,])))
+colnames(X_i) = NULL
+
 df.y = data.frame(y = y)
 df.X.obs = data.frame(X = X) %>% pivot_longer(starts_with("X")) %>% mutate(series = "obs")
-df.X.fit = data.frame(X = stan.extract$X_i) %>% pivot_longer(starts_with("X")) %>% mutate(series = "fit")
+df.X.fit = data.frame(X = X_i) %>% pivot_longer(starts_with("X")) %>% mutate(series = "fit")
 df.X = rbind(df.X.obs, df.X.fit)
 
 df.X.actual = data.frame(X.int = X[obs.number,], name = paste0("X.", 1:ncol(X)))

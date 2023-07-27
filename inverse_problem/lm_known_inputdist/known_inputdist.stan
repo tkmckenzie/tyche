@@ -10,10 +10,17 @@ data{
 	
 	real y_i;
 }
+transformed data{
+	vector[k] ones;
+	
+	ones = rep_vector(1, k);
+}
 parameters{
-	vector[k] X_i;
+	matrix[k, sample_iter] X_i;
 }
 model{
-	X_i ~ multi_normal(mu_X, Sigma_X);
-	y_i ~ normal(X_i' * beta, sigma);
+	for (i in 1:sample_iter){
+		X_i[1:k, i] ~ multi_normal(mu_X, Sigma_X);
+	}
+	y_i ~ normal((X_i' .* beta) * ones, sigma);
 }

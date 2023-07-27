@@ -6,7 +6,7 @@ library(tidyr)
 setwd("~/git/tyche/inverse_problem/lm_known_inputdist")
 rm(list = ls())
 
-burn.iter = 1000
+burn.iter = 10000
 sample.iter = 1000
 
 load("data.RData")

@@ -1,7 +1,7 @@
 library(mvtnorm)
 
 
-setwd("~/git/tyche/inverse_problem/lm")
+setwd("~/git/tyche/inverse_problem/lm_known_inputdist")
 rm(list = ls())
 
 set.seed(0)
