@@ -11,20 +11,22 @@ sample.iter = 1000
 
 load("data.RData")
 load("params.RData")
-load("stanfit_lm.RData")
+load("stanfit_lm_forward.RData")
 
 obs.number = 75
-stan.data = list(sample_iter = nrow(stan.extract$beta), k = ncol(stan.extract$beta), 
-                 beta = stan.extract$beta, sigma = stan.extract$sigma,
+stan.data = list(sample_iter = nrow(stan.extract.forward$beta), k = ncol(stan.extract.forward$beta), 
+                 beta = stan.extract.forward$beta, sigma = stan.extract.forward$sigma,
                  mu_X = mu.X, Sigma_X = Sigma.X,
                  y_i = c(X[obs.number,] %*% beta))
-stan.fit = stan("known_inputdist.stan", data = stan.data,
-                chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
-                refresh = floor((burn.iter + sample.iter) / 100))
-traceplot(stan.fit)
-stan.extract = rstan::extract(stan.fit)
+stan.fit.inverse = stan("known_inputdist.stan", data = stan.data,
+                        chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
+                        refresh = floor((burn.iter + sample.iter) / 100))
+traceplot(stan.fit.inverse)
+stan.extract.inverse = rstan::extract(stan.fit.inverse)
 
-X_i = Reduce(cbind, lapply(1:k, function(i) c(stan.extract$X_i[,i,])))
+save(stan.fit.inverse, stan.extract.inverse, file = "stanfit_lm_inverse.RData")
+
+X_i = Reduce(cbind, lapply(1:k, function(i) c(stan.extract.inverse$X_i[,i,])))
 colnames(X_i) = NULL
 
 df.y = data.frame(y = y)
