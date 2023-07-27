@@ -3,7 +3,7 @@ library(ggplot2)
 library(rstan)
 library(tidyr)
 
-setwd("~/git/tyche/inverse_problem/lm")
+setwd("~/git/tyche/inverse_problem/lm_known_params")
 rm(list = ls())
 
 burn.iter = 1000
@@ -37,4 +37,6 @@ ggplot() +
   geom_density(data = df.X, aes(x = value, color = series, fill = series), alpha = 0.25) +
   geom_vline(data = df.X.actual, aes(xintercept = X.int)) +
   facet_wrap(~ name, ncol = 2) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "top")
+ggsave("plot.png", width = 6, height = 6)

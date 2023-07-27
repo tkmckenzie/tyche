@@ -14,18 +14,17 @@ load("params.RData")
 load("stanfit_lm_forward.RData")
 
 obs.number = 75
-stan.data = list(sample_iter = nrow(stan.extract.forward$beta), k = ncol(stan.extract.forward$beta),
+stan.data = list(sample_iter = nrow(stan.extract.forward$beta), k = ncol(stan.extract.forward$beta), 
                  beta = stan.extract.forward$beta, sigma = stan.extract.forward$sigma,
                  mu_X = mu.X, Sigma_X = Sigma.X,
                  y_i = c(X[obs.number,] %*% beta))
-# stan.fit.inverse = stan("known_inputdist.stan", data = stan.data,
-#                         chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
-#                         refresh = floor((burn.iter + sample.iter) / 100))
-# traceplot(stan.fit.inverse)
-# stan.extract.inverse = rstan::extract(stan.fit.inverse)
-# 
-# save(stan.fit.inverse, stan.extract.inverse, file = "stanfit_lm_inverse.RData")
-load("stanfit_lm_inverse.RData")
+stan.fit.inverse = stan("known_inputdist.stan", data = stan.data,
+                        chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
+                        refresh = floor((burn.iter + sample.iter) / 100))
+traceplot(stan.fit.inverse)
+stan.extract.inverse = rstan::extract(stan.fit.inverse)
+
+save(stan.fit.inverse, stan.extract.inverse, file = "stanfit_lm_inverse.RData")
 
 X_i = Reduce(cbind, lapply(1:k, function(i) c(stan.extract.inverse$X_i[,i,])))
 colnames(X_i) = NULL
@@ -45,6 +44,4 @@ ggplot() +
   geom_density(data = df.X, aes(x = value, color = series, fill = series), alpha = 0.25) +
   geom_vline(data = df.X.actual, aes(xintercept = X.int)) +
   facet_wrap(~ name, ncol = 2) +
-  theme_bw() +
-  theme(legend.position = "top")
-ggsave("plot.png", width = 6, height = 6)
+  theme_bw()
