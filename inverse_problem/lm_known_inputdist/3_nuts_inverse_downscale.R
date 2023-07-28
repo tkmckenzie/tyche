@@ -8,14 +8,17 @@ rm(list = ls())
 
 burn.iter = 1000
 sample.iter = 1000
+downscale.size = 100
 
 load("data.RData")
 load("params.RData")
 load("stanfit_lm_forward.RData")
 
 obs.number = 75
-stan.data = list(sample_iter = nrow(stan.extract.forward$beta), k = ncol(stan.extract.forward$beta), 
-                 beta = stan.extract.forward$beta, sigma = stan.extract.forward$sigma,
+downscale.sample = sample(1:nrow(stan.extract.forward$beta), downscale.size)
+stan.data = list(sample_iter = downscale.size, k = ncol(stan.extract.forward$beta), 
+                 beta = stan.extract.forward$beta[downscale.sample,], 
+                 sigma = stan.extract.forward$sigma[downscale.sample],
                  mu_X = mu.X, Sigma_X = Sigma.X,
                  y_i = c(X[obs.number,] %*% beta))
 stan.fit.inverse = stan("known_inputdist.stan", data = stan.data,
