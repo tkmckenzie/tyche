@@ -7,8 +7,8 @@ data{
 	vector<lower=0>[sample_iter] sigma;
 	
 	vector[num_components] mixing_probs;
-	array[num_components] vector[k] mu_X;
-	array[num_components] matrix[k, k] Sigma_X;
+	vector[k] mu_X[num_components];
+	matrix[k, k] Sigma_X[num_components];
 	
 	real y_i;
 }
@@ -21,12 +21,12 @@ parameters{
 	matrix[k, sample_iter] X_i;
 }
 transformed parameters{
-	array[sample_iter, num_components] mixing_summand;
+	real mixing_summand[sample_iter, num_components];
 	vector[sample_iter] mixing_sum;
 	
 	for (i in 1:sample_iter){
 		for (component in 1:num_components){
-			mixing_summand[i, component] = log(mixing_probs[component]) + normal_lpdf(X[1:k, i] | mu_X[component], Sigma_X[component]);
+			mixing_summand[i, component] = log(mixing_probs[component]) + multi_normal_lpdf(col(X_i, i) | mu_X[component], Sigma_X[component]);
 		}
 		mixing_sum[i] = log_sum_exp(mixing_summand[i]);
 	}

@@ -15,7 +15,7 @@ stan.data = list(N = N, k = k, X = X, y = y)
 stan.fit.forward = stan("lm.stan", data = stan.data,
                         chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
                         refresh = floor((burn.iter + sample.iter) / 100))
-traceplot(stan.fit.forward)
+rstan::traceplot(stan.fit.forward)
 stan.extract.forward = rstan::extract(stan.fit.forward)
 
 save(stan.fit.forward, stan.extract.forward, file = "stanfit_lm_forward.RData")
