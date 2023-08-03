@@ -3,6 +3,8 @@ library(ggplot2)
 library(rstan)
 library(tidyr)
 
+rstan_options(auto_write = TRUE)
+
 setwd("~/git/tyche/inverse_problem/examples/lm-mixednormal-fixed")
 rm(list = ls())
 
@@ -17,7 +19,6 @@ stan.fit.forward = stan("lm_forward.stan", data = stan.data,
                         refresh = floor((burn.iter + sample.iter) / 100))
 rstan::traceplot(stan.fit.forward)
 stan.extract.forward = rstan::extract(stan.fit.forward)
-
 save(stan.fit.forward, stan.extract.forward, file = "stanfit_lm_forward.RData")
 
 df = data.frame(alpha = stan.extract.forward$alpha,

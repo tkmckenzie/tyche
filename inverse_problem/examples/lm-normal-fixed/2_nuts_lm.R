@@ -3,6 +3,8 @@ library(ggplot2)
 library(rstan)
 library(tidyr)
 
+rstan_options(auto_write = TRUE)
+
 setwd("~/git/tyche/inverse_problem/examples/lm-normal-fixed")
 rm(list = ls())
 

@@ -19,14 +19,14 @@ stan.data = list(sample_iter = nrow(stan.extract.forward$beta), k = ncol(stan.ex
                  beta = stan.extract.forward$beta, sigma = stan.extract.forward$sigma,
                  mu_X = mu.X, Sigma_X = Sigma.X,
                  y_i = y.val)
-# stan.fit.inverse = stan("lm_inverse.stan", data = stan.data,
-#                         chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
-#                         refresh = floor((burn.iter + sample.iter) / 100))
-# traceplot(stan.fit.inverse)
-# stan.extract.inverse = rstan::extract(stan.fit.inverse)
-# save(stan.fit.inverse, stan.extract.inverse, file = "stanfit_lm_inverse.RData")
+stan.fit.inverse = stan("lm_inverse.stan", data = stan.data,
+                        chains = 1, iter = burn.iter + sample.iter, warmup = burn.iter,
+                        refresh = floor((burn.iter + sample.iter) / 100))
+rstan::traceplot(stan.fit.inverse)
+stan.extract.inverse = rstan::extract(stan.fit.inverse)
+save(stan.fit.inverse, stan.extract.inverse, file = "stanfit_lm_inverse.RData")
 
-load("stanfit_lm_inverse.RData")
+# load("stanfit_lm_inverse.RData")
 
 X_i = Reduce(cbind, lapply(1:k, function(i) c(stan.extract.inverse$X_i[,i,])))
 colnames(X_i) = NULL

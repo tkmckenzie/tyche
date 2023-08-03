@@ -16,9 +16,9 @@ k = 2
 # Sigma.X = rWishart(1, k, diag(k))[,,1]
 
 alpha = 4
-beta = c(-2.5, -1.25)
-mu.X = c(-3, 4)
-Sigma.X = matrix(c(4.5, -0.75, -0.75, 1.25), nrow = 2)
+beta = c(-2.5, 1.25)
+mu.X = c(-8, 2)
+Sigma.X = matrix(c(0.6, -0.9, -0.9, 1.5), nrow = 2)
 sigma = 0.4
 
 X = rmvnorm(N, mu.X, Sigma.X)
@@ -28,8 +28,9 @@ y = c(alpha + X %*% beta + eps)
 save(N, k, X, y, file = "data.RData")
 save(N, k, alpha, beta, sigma, mu.X, Sigma.X, eps, file = "params.RData")
 
-y.val = tail(sort(y), 2)[1]
-y.index = which(y == y.val)
+# y.val = tail(sort(y), 2)[1]
+# y.index = which(y == y.val)
+y.index = 11
 X.val = X[y.index,,drop = FALSE]
 y.val = c(alpha + X.val %*% beta)
 save(y.val, X.val, file = "values.RData")
