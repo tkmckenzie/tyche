@@ -53,6 +53,7 @@ save(stan.fit.inverse.list, stan.extract.inverse.list, forward.sample.obs,
 load("stanfit_lm_inverse.RData")
 
 # Post processing of samples
+model.probs = c(1, 0)
 X_i.list = lapply(1:num.components, function(c) Reduce(cbind, lapply(1:k, function(i) c(stan.extract.inverse.list[[c]]$X_i[,i,]))))
 component.sample.weights = model.probs / max(model.probs)
 component.sample.sizes = sapply(1:num.components, function(c) round(nrow(X_i.list[[c]]) * component.sample.weights[c]))
